@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .spiro-wrap{
+            margin: 100px 30%;
+        }
+    </style>
+
+</head>
+<body>
+
+
+<div class="spiro-wrap">
+    <canvas id="canvas" width="500" height="500" style="border: 1px solid black"></canvas>
+    <br><br>
+    <label for="color">Color</label>
+    <input type="color" id="color"><br><br>
+    <label for="first">R</label>
+    <input type="range" id="first" min="10" max="500" step="10" value="200"><br><br>
+    <label for="second">r</label>
+    <input type="range" id="second" min="10" max="500" step="10" value="110"><br><br>
+    <label for="third">d</label>
+    <input type="range" id="third" min="10" max="500" step="10" value="70"><br><br>
+    <label for="four">Толщина линий</label>
+    <input type="range" id="four" min="1" max="10" step="1" value="3"><br><br>
+</div>
+
+
+<script>
+
+    var canvas = document.getElementById("canvas");
+    var ctx = canvas.getContext("2d");
+
+    var R = 200;
+    var r = 110;
+    var d = 70;
+    var teta = 0;
+    var tol = 3;
+    var myColor;
+
+    document.getElementById("color").oninput = function () {
+        ctx.clearRect(0, 0,ctx.canvas.width, ctx.canvas.height);
+        myColor = this.value;
+    };
+
+    document.getElementById("first").oninput = function () {
+        ctx.clearRect(0, 0,ctx.canvas.width, ctx.canvas.height);
+        R = this.value;
+    };
+
+    document.getElementById("second").oninput = function () {
+        ctx.clearRect(0, 0,ctx.canvas.width, ctx.canvas.height);
+        r = this.value;
+    };
+
+    document.getElementById("third").oninput = function () {
+        ctx.clearRect(0, 0,ctx.canvas.width, ctx.canvas.height);
+        d = this.value;
+    };
+
+    document.getElementById("four").oninput = function () {
+        ctx.clearRect(0, 0,ctx.canvas.width, ctx.canvas.height);
+        tol = this.value;
+    };
+
+    function spiro() {
+        var x = (R - r) * Math.cos(teta) + d * Math.cos((R - r) * teta / r);
+        var y = (R - r) * Math.sin(teta) + d * Math.sin((R - r) * teta / r);
+        teta += 0.5;
+        ctx.fillStyle = myColor;
+        ctx.fillRect(ctx.canvas.width / 2  + x, ctx.canvas.height / 2 +  y, tol, tol);
+    }
+
+    setInterval(spiro, 0);
+
+
+
+
+
+</script>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+</body>
+</html>
